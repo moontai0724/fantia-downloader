@@ -1,0 +1,18 @@
+{
+  "name": "fantia-downloader",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "Download post contents from fantia.jp",
+  "main": "index.js",
+  "repository": "https://github.com/moontai0724/fantia-downloader",
+  "author": {
+    "name": "moontai0724",
+    "email": "moontai0724@gmail.com",
+    "url": "https://moontai0724.tw"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "dotenv": "^8.2.0"
+  }
+}
