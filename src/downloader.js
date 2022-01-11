@@ -34,7 +34,13 @@ export default class Downloader {
     });
     const extension = Path.extname(new URL(response.data.responseUrl).pathname);
     const path = Path.resolve(this.baseDirectory, directoryName, filename + extension);
-    if (FileSystem.existsSync(path)) return;
+    if (FileSystem.existsSync(path)) {
+      const fileStat = FileSystem.statSync(path);
+      if (fileStat.size == response.headers["content-length"]) {
+        console.log(`${filename}${extension} already downloaded, skipped.`);
+        return;
+      }
+    }
 
     const writer = FileSystem.createWriteStream(path);
 
