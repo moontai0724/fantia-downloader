@@ -23,10 +23,6 @@ export default class Downloader {
   async download(url, filename, directoryName = "") {
     filename = filename.replaceIllegalPathCharacters();
     directoryName = directoryName.replaceIllegalPathCharacters();
-    const path = Path.resolve(this.baseDirectory, directoryName, filename);
-    if (FileSystem.existsSync(path)) return;
-
-    const writer = FileSystem.createWriteStream(path);
 
     const response = await Axios({
       method: "GET",
@@ -36,12 +32,23 @@ export default class Downloader {
         Cookie: `_session_id=${process.env.SESSION_ID}`,
       },
     });
+    const extension = Path.extname(new URL(response.data.responseUrl).pathname);
+    const path = Path.resolve(this.baseDirectory, directoryName, filename + extension);
+    if (FileSystem.existsSync(path)) return;
+
+    const writer = FileSystem.createWriteStream(path);
 
     response.data.pipe(writer);
 
     return new Promise((resolve, reject) => {
-      writer.on("finish", resolve);
-      writer.on("error", reject);
+      writer.on("finish", (...messages) => {
+        console.log(`${filename}${extension} downloaded.`);
+        resolve(messages);
+      });
+      writer.on("error", (...messages) => {
+        console.log(`${filename}${extension} failed to download!`, messages);
+        reject(messages);
+      });
     });
   }
 }

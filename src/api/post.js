@@ -85,18 +85,18 @@ export default class Post {
     console.log("Downloader created for:", `${this.id}-${this.title}`);
 
     if (this.data.thumb)
-      await downloader.download(this.data.thumb.original, `${prefix}-cover.jpg`).then(result => console.log(`cover.jpg downloaded.`));
+      await downloader.download(this.data.thumb.original, `${prefix}-cover`);
 
     let images = await this.getImages();
     console.log(`Total ${images.length} images to download.`);
     await Promise.all(images.map(async image => {
-      return await downloader.download(image.url, `${prefix}-${image.id}.jpg`).then(result => console.log(`${image.id}.jpg downloaded.`));
+      return await downloader.download(image.url, `${prefix}-${image.id}`);
     }));
 
     let videos = await this.getVideos();
     console.log(`Total ${videos.length} videos to download.`);
     await Promise.all(videos.map(async video => {
-      return await downloader.download(video.url, `${prefix}-${video.id}.mp4`).then(result => console.log(`${video.id}.mp4 downloaded.`));
+      return await downloader.download(video.url, `${prefix}-${video.id}`);
     }));
 
     console.log("Download success.");
