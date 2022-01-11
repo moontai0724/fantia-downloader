@@ -38,3 +38,11 @@ Avaliable options: `forward`, `backward`.
 
 Forward, means it will go to **next** post after current post downloaded (To newer post).  
 Backward, means it will go to **previous** post after current post downloaded (To older post).
+
+# Known Issues
+
+## Forbidden characters in name on windows (resolved, with side effect)
+
+On windows, there are some characters are forbidden in a file or directory name, so I replaced them into `+` character.
+
+Following characters will be replaced into `+` character: `/`, `\`, `?`, `%`, `*`, `:`, `|`, `"`, `<`, `>`.

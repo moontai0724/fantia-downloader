@@ -50,3 +50,7 @@ function getDirection() {
   else
     throw new Error("DIRECTION (which is an variable in `.env` file) must be `forward` or `backward`!");
 }
+
+String.prototype.replaceIllegalPathCharacters = function () {
+  return this.replace(/[/\\?%*:|"<>]/g, "+");
+};
